@@ -1,4 +1,6 @@
+from gtts import gTTS
 import os
+import playsound
 import speech_recognition as sr
 # Import lexer and parser from ply module
 import ply.lex as lex
@@ -53,6 +55,13 @@ def p_error(p):
     print("Syntax error in input!")
 
 
+def speak(text):
+    tts = gTTS(text=text, lang="en")
+    filename = "voice.mp3"
+    tts.save(filename)
+    playsound.playsound(filename)
+
+
 #######################################
 # Main program
 
@@ -68,7 +77,12 @@ with sr.Microphone() as source:
     audio = r.record(source, duration=4)
     try:
         s = r.recognize_google(audio)
-        print(s.capitalize() + ".")
+        if s.lower() == "hey siri":
+            print(s.title())
+            speak("aha")
+            audio = r.record(source, duration=4)
+            s = r.recognize_google(audio)
+            print(s.capitalize() + ".")
     except:
         print("Sorry could not recognize your voice")
     parser.parse(s.lower())
