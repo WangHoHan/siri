@@ -25,12 +25,6 @@ def t_NAME(t):
 
 def t_TYPE(t):
     r'document | program | website'
-    if t.value == 'document':
-        t.value = 1
-    elif t.value == 'program':
-        t.value = 2
-    elif t.value == 'website':
-        t.value = 3
     return t
 
 
@@ -48,7 +42,8 @@ t_ignore = ' \t'
 def p_command(p):
     'command : OPERATE NAME TYPE'
     if p[1] == 'open':
-        pass
+        if p[3] == 'program':
+            os.system("start " + p[2])
     elif p[1] == 'close':
         pass
 
@@ -73,7 +68,7 @@ with sr.Microphone() as source:
     audio = r.record(source, duration=4)
     try:
         s = r.recognize_google(audio)
-        print(s)
+        print(s.capitalize() + ".")
     except:
         print("Sorry could not recognize your voice")
     parser.parse(s.lower())
