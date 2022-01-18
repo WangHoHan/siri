@@ -7,6 +7,7 @@ import ply.yacc as yacc
 # List of token types.
 tokens = (
     'OPERATE',
+    'NAME',
     'TYPE'
 )
 
@@ -17,8 +18,13 @@ def t_OPERATE(t):
     return t
 
 
+def t_NAME(t):
+    r'\w+\s'
+    return t
+
+
 def t_TYPE(t):
-    r'(document | program | website)'
+    r'document | program | website'
     if t.value == 'document':
         t.value = 1
     elif t.value == 'program':
@@ -40,7 +46,7 @@ t_ignore = ' \t'
 
 # Main parser rule (command)
 def p_command(p):
-    'command : OPERATE TYPE'
+    'command : OPERATE NAME TYPE'
     if p[1] == 'open':
         pass
     elif p[1] == 'close':

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'OPERATE TYPEcommand : OPERATE TYPE'
+_lr_signature = 'NAME OPERATE TYPEcommand : OPERATE NAME TYPE'
     
-_lr_action_items = {'OPERATE':([0,],[2,]),'$end':([1,3,],[0,-1,]),'TYPE':([2,],[3,]),}
+_lr_action_items = {'OPERATE':([0,],[2,]),'$end':([1,4,],[0,-1,]),'NAME':([2,],[3,]),'TYPE':([3,],[4,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,5 +27,5 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> command","S'",1,None,None,None),
-  ('command -> OPERATE TYPE','command',2,'p_command','siri.py',42),
+  ('command -> OPERATE NAME TYPE','command',3,'p_command','siri.py',50),
 ]
