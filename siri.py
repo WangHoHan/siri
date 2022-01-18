@@ -1,4 +1,5 @@
 import os
+import speech_recognition as sr
 # Import lexer and parser from ply module
 import ply.lex as lex
 import ply.yacc as yacc
@@ -60,9 +61,13 @@ lexer = lex.lex()
 # Build the parser
 parser = yacc.yacc()
 
-# Main loop
-while True:
-    s = input('What can I do for you? \n')
-    if s == 'Bye':
-        break
-    parser.parse(s)
+r = sr.Recognizer()
+
+with sr.Microphone() as source:
+    audio = r.record(source, duration=4)
+    try:
+        s = r.recognize_google(audio)
+        print(s)
+    except:
+        print("Sorry could not recognize your voice")
+    parser.parse(s.lower())
