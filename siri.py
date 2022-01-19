@@ -50,7 +50,7 @@ def p_command(p):
         elif p[3] == 'website':
             webbrowser.open_new_tab(p[2].strip(" ") + ".com")
     elif p[1] == 'close':
-        pass
+        os.system("TASKKILL /F /IM " + p[2].strip(" ") + ".exe")
 
 
 # Syntax error handling rule
