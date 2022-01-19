@@ -2,6 +2,7 @@ from gtts import gTTS
 import os
 import playsound
 import speech_recognition as sr
+import subprocess
 import webbrowser
 # Import lexer and parser from ply module
 import ply.lex as lex
@@ -45,7 +46,13 @@ t_ignore = ' \t'
 def p_command(p):
     'command : OPERATE NAME TYPE'
     if p[1] == 'open':
-        if p[3] == 'program':
+        if p[3] == 'document':
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            for root, dirs, files in os.walk(dir_path):
+                for file in files:
+                    if file.startswith(p[2].strip(" ")):
+                        os.startfile(root + '/' + str(file))
+        elif p[3] == 'program':
             os.system("start " + p[2])
         elif p[3] == 'website':
             webbrowser.open_new_tab(p[2].strip(" ") + ".com")
