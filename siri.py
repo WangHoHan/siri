@@ -2,6 +2,7 @@ from gtts import gTTS
 import os
 import playsound
 import speech_recognition as sr
+import webbrowser
 # Import lexer and parser from ply module
 import ply.lex as lex
 import ply.yacc as yacc
@@ -46,6 +47,8 @@ def p_command(p):
     if p[1] == 'open':
         if p[3] == 'program':
             os.system("start " + p[2])
+        elif p[3] == 'website':
+            webbrowser.open_new_tab(p[2].strip(" ") + ".com")
     elif p[1] == 'close':
         pass
 
